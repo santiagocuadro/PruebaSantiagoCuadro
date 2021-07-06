@@ -47,13 +47,12 @@ function readUsers(users) {
 
 const getUsersByModule = (dataset) => {
 	let output =[]
-    let aux = []
+ 	let storedkeys = []
 	const authModulesKeys = Object.keys(dataset.auth_modules).sort()
 	const contentModulesKeys = Object.keys(dataset.content_modules).sort()
 
 	contentModulesKeys.forEach((contentModuleProvider) => {
 		const contentModuleUsers = dataset.content_modules[contentModuleProvider].sort()
-        //console.log(contentModuleUsers)
 
 		contentModuleUsers.some((user) => {
 			let evaluation = false
@@ -63,10 +62,11 @@ const getUsersByModule = (dataset) => {
 					return module.includes(user)
 				})
 
-				if (authModuleHasUser && !aux.includes(authModuleProvider)) {
+				if (authModuleHasUser && !storedkeys.includes(authModuleProvider)) {
 					evaluation = true
-                    aux.push(authModuleProvider)
+                    			storedkeys.push(authModuleProvider)
 					output.push(user)
+					
 					return
 				}
 			})
